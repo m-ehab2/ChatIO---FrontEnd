@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Box, Input } from "@mui/material";
+import REGButton from "./components/REGButton";
+import MyInput from "./components/MyInput";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Box
+      className="app-container"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "50px",
+          width: "50%",
+        }}
+      >
+        <h1>Create your account</h1>
+        <MyInput
+          name="Username"
+          type="string"
+          placeholder="Enter your username"
+        />
+        <MyInput name="Email" type="email" placeholder="Example@email.com" />
+        <MyInput name="Password" type="password" placeholder="" />
+        <MyInput name="Confirm password" type="password" placeholder="" />
+        <REGButton children="Sign Up" />
+      </Box>
+      <Box>
+        <img className="image" src="/src/assets/6300959.jpg" alt="" />
+      </Box>
+    </Box>
+  );
+};
 
-export default App
+export default App;
