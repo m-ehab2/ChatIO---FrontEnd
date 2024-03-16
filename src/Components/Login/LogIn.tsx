@@ -1,28 +1,28 @@
 // import { useState } from 'react';
 import { Box, TextField, Button, Typography, Link } from '@mui/material'
-import path from '../assets/login.jpeg'
+import path from '../../assets/login.jpeg'
 function LogIn() {
 
   return (
     <>
       {/* Main container */}
-
       <Box sx={{
         // background: "red",
         width: "100%",
         display: "flex",
         justifyContent: "space-between",
-        position: "fixed",
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        padding: "2rem",
-        margin: 0,
+        position: "relative",
+        height: "100vh",
+        // right: 0,
+        // top: 0,
+        // bottom: 0,
+        // padding: "2rem",
+        margin: 0
       }}
       >
+
         {/* left container inside Main*/}
-        <Box sx={{ paddingLeft: "5.5rem", paddingBottom: "5.5rem", paddingRight: "5.5rem", width: "30%", paddingTop: "4.2rem" }}>
+        <Box sx={{ paddingLeft:{ lg:"5.5rem", md:"3.5rem", xs:"1rem"}, paddingBottom: "5.5rem", paddingRight: {lg:"5.5rem"}, width: {lg:"30%",md:"90%",xs:"100%"}, paddingTop: "4.2rem" }}>
 
           {/* heading */}
           <Typography variant="h4" sx={{ fontFamily: 'Varela Round', color: 'black', marginBottom: '5rem', fontWeight: 700, paddingLeft: "1rem" }}>
@@ -30,7 +30,7 @@ function LogIn() {
           </Typography>
 
           {/* input form */}
-          <form style={{ display: "flex", flexDirection: "column", gap: "2.3rem" }}>
+          <form style={{ display: "flex", flexDirection: "column", gap: "2.3rem",width:"100%" }}>
 
             {/* inputs container inside form */}
             <Box sx={{ display: "flex", flexDirection: "column" }} >
@@ -41,7 +41,8 @@ function LogIn() {
                   mb: 5,
                   borderRadius: "12px",
                   borderColor: '#d4d7e3',
-                  background: "#fbfbfb", // Change background color to white
+                  background: "#fbfbfb",
+                  width:"100%" // Change background color to white
                 }}
               />
               <TextField
@@ -91,7 +92,7 @@ function LogIn() {
         </Box>
 
         {/* right container inside Main */}
-        <Box sx={{ paddingTop: "4.2rem", marginTop: "4.2rem", width: { lg: "60%", sm: "50%" }, display: { xs: "none", sm: "flex" }, alignItems: "end", justifyContent: { sm: "end" } }}>
+        <Box sx={{ background:"red", width: { md: "60%", sm: "50%" }, display: { xs: "none", md: "flex" }, alignItems: "center", justifyContent: { sm: "end" } }}>
           
           {/* img */}
           <Box
