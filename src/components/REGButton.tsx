@@ -13,7 +13,7 @@ const REGButton = ({ children }: prop) => {
           "&:hover": {
             backgroundColor: "#405e69",
           },
-          width: "400px",
+          width: "59%",
           borderRadius: "12px",
           maxHeight: "200px",
           minWidth: "30px",
@@ -21,7 +21,6 @@ const REGButton = ({ children }: prop) => {
         }}
         variant="contained"
         size="large"
-        color="success"
       >
         {children}
       </Button>

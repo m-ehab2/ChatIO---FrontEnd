@@ -17,25 +17,24 @@ interface prop {
 // };
 
 // export default input;
-import React from "react";
 
 const MyInput = ({ type, name, placeholder }: prop) => {
   return (
     <TextField
       sx={{
-        width: "400px",
-        height: "10px",
-        borderRadius: "12px",
+        width: "59%",
+        borderRadius: "40px",
         // maxHeight: "200px",
         minWidth: "30px",
         minHeight: "30px",
       }}
       type={type}
-      id="outlined-helperText"
+      id="outlined-basic"
       label={name}
       variant="outlined"
       defaultValue={placeholder}
     />
+    // <TextField id="outlined-basic" label="Outlined" variant="outlined" />
     // <TextField id="outlined-basic" label="Outlined" variant="outlined" />
     // <TextField
     //     id="outlined-helperText"
