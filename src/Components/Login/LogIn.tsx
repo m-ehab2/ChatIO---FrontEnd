@@ -34,9 +34,6 @@ validationSchema: Yup.object({
         justifyContent: "space-between",
         // position: "relative",
         height:{md:"98vh",xs:"auto"},   
-        // top: 0,
-        // bottom: 0,
-        // paddingLeft: "1rem",
         margin: 0
       }}
       >
