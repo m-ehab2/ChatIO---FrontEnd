@@ -1,11 +1,10 @@
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login/Login";
-import Register from "./Pages/Register/Register";
 import Chat from "./Pages/Chat/Chat";
 import { UserProvider } from "./Context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LogIn from "./Pages/Login/LogIn";
+import Registration from "./Pages/Register/Registration";
 
 function App() {
   return (
@@ -13,8 +12,8 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            <Route path={"/"} element={<Login />} />
-            <Route path={"/register"} element={<Register />} />
+            <Route path={"/"} element={<LogIn />} />
+            <Route path={"/register"} element={<Registration />} />
             <Route path={"/chat"} element={<Chat />} />
           </Routes>
         </BrowserRouter>
