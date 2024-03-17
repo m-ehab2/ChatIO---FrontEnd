@@ -1,9 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useState, useContext } from "react";
-
-interface UserData {
-  username: string;
-}
+import { UserData } from "../Hooks/useAuth";
 
 interface UserContextType {
   user: UserData | null;
