@@ -22,7 +22,7 @@ const MyInput = ({ type, name, placeholder }: prop) => {
   return (
     <TextField
       sx={{
-        width: "59%",
+        width: { md: "59%", xs: "100%" },
         borderRadius: "40px",
         // maxHeight: "200px",
         minWidth: "30px",

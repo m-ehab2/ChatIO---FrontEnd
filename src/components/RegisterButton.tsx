@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 interface prop {
   children: ReactNode;
 }
-const REGButton = ({ children }: prop) => {
+const RegisterButton = ({ children }: prop) => {
   return (
     <Box>
       <Button
@@ -13,11 +13,13 @@ const REGButton = ({ children }: prop) => {
           "&:hover": {
             backgroundColor: "#405e69",
           },
-          width: "59%",
+
+          width: { md: "59%", xs: "100%" },
           borderRadius: "12px",
           maxHeight: "200px",
           minWidth: "30px",
           minHeight: "30px",
+          padding: "12px",
         }}
         variant="contained"
         size="large"
@@ -28,4 +30,4 @@ const REGButton = ({ children }: prop) => {
   );
 };
 
-export default REGButton;
+export default RegisterButton;
