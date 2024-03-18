@@ -71,10 +71,13 @@ export default function Profile() {
         fullWidth
         placeholder="Search..."
         size="small"
+        inputProps={{
+          style: { fontSize: "16px" },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon fontSize="medium" />
             </InputAdornment>
           ),
         }}
