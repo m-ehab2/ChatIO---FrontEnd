@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import RegisterButton from "../../components/RegisterButton";
-import MyInput from "../../components/MyInput";
-import GoogleButton from "../../components/GoogleButton";
-import FacebookButton from "../../components/FacebookButton";
+import RegisterButton from "../../components/Register/RegisterButton";
+import MyInput from "../../components/Register/MyInput";
+import GoogleButton from "../../components/Register/GoogleButton";
+import FacebookButton from "../../components/Register/FacebookButton";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 const Registration = () => {
   return (
