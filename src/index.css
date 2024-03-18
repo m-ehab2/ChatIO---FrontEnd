@@ -1,5 +1,3 @@
-
-body {
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -12,7 +10,8 @@ body {
   2. Remove default margin
 */
 * {
-  margin: 0;
+  margin: 0px;
+  padding: 0px;
 }
 /*
   Typographic tweaks!
@@ -20,7 +19,6 @@ body {
   4. Improve text rendering
 */
 body {
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
