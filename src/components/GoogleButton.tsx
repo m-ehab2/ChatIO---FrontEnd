@@ -1,7 +1,9 @@
 // import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import { Children, ReactNode } from "react";
-import GoogleIcon from "@mui/icons-material/Google";
+// import GoogleIcon from "@mui/icons-material/Google";
+import { FcGoogle } from "react-icons/fc";
+
 import { styled } from "@mui/material/styles";
 
 const CustomButton = styled(Button)({
@@ -27,7 +29,7 @@ const GoogleButton = ({ children }: prop) => {
   return (
     <CustomButton
       variant="contained"
-      startIcon={<GoogleIcon sx={{ color: "red" }} />}
+      startIcon={<FcGoogle/>}
       sx={{
         backgroundColor: "#E8F0F1",
         color: "black",
