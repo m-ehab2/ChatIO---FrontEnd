@@ -12,7 +12,7 @@ interface ErrorResponse {
   message: string;
 }
 
-const BASE_URL = "http://localhost:8000/api/v1/user";
+const BASE_URL = "http://localhost:8000/api/v1/auth";
 
 const useAuth = () => {
   const [user, setUser] = useState<UserData | null>(null);
@@ -22,14 +22,20 @@ const useAuth = () => {
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     try {
-      const response: AxiosResponse<unknown> = await axios.post(
+      const response: AxiosResponse<{ data: UserData }> = await axios.post(
         `${BASE_URL}/login`,
         {
           email,
           password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
         }
       );
-      console.log(response);
       setUser(response.data.data);
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
@@ -49,14 +55,22 @@ const useAuth = () => {
   ): Promise<void> => {
     setLoading(true);
     try {
-      const response: AxiosResponse<{ data: { data: UserData } }> =
-        await axios.post(`${BASE_URL}/signup`, {
+      const response: AxiosResponse<{ data: UserData }> = await axios.post(
+        `${BASE_URL}/signup`,
+        {
           name,
           email,
           password,
           passwordConfirm,
-        });
-      console.log(response.data.data);
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setUser(response.data.data);
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
