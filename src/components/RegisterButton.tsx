@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import { ReactNode } from "react";
 interface prop {
@@ -14,7 +14,7 @@ const RegisterButton = ({ children }: prop) => {
             backgroundColor: "#405e69",
           },
 
-          width: { md: "59%", xs: "100%" },
+          width: { md: "65%", xs: "100%" },
           borderRadius: "12px",
           maxHeight: "200px",
           minWidth: "30px",
@@ -23,6 +23,7 @@ const RegisterButton = ({ children }: prop) => {
         }}
         variant="contained"
         size="large"
+        type="submit"
       >
         {children}
       </Button>
