@@ -5,39 +5,47 @@ import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 import imgPath from "../../assets/login.jpeg";
+import useAuth from '../../Hooks/useAuth';
 import { FcGoogle } from "react-icons/fc";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 
-// import GoogleButton from "../../components/GoogleButton";
-
 
 
 function LogIn() {
+
+  const { login, loading, error } = useAuth();
+  
+
 
   const theme = useTheme();
 
   const isMediumOrSmaller = useMediaQuery(theme.breakpoints.down("lg"));
   // const isLargeOrAbove = useMediaQuery(theme.breakpoints.up("lg"));
 
-  const [showPassword, setShowPassword] = useState(false); // Define showPassword state variable and setShowPassword function
+  const [showPassword, setShowPassword] = useState(false); 
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Please, Enter a valid email cerdintials")
+        .email("Please enter a valid email address")
         .required("Email is required"),
       password: Yup.string()
-        .min(6, "Please, Enter a valid password cerdintials")
+        .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
     }),
+    onSubmit: async (values) => {
+      try {
+        console.log(values)
+        await login(values.email, values.password);
+      } catch (error) {
+        console.error("Login error:", error);
+      }
+    },
   });
 
   return (
@@ -119,6 +127,8 @@ function LogIn() {
                   variant="outlined"
                   id="outlined-error-helper-text"
                   size={isMediumOrSmaller ? "small" : "medium"}
+                  autoComplete="false"
+
                   helperText={
                     formik.touched.email && formik.errors.email ? (
                       <Typography sx={{ color: "e06e6e" }}>{formik.errors.email}</Typography>
@@ -136,14 +146,14 @@ function LogIn() {
                 />
                 <TextField
                   label="Password"
-                  type={showPassword ? "text" : "password"} variant="outlined"
+                  type={showPassword ? 'text' : 'password'} // Toggle between text and password type
+                  variant="outlined"
                   size={isMediumOrSmaller ? "small" : "medium"}
                   helperText={
                     formik.touched.password && formik.errors.password ? (
-                      <Typography sx={{ color: "e06e6e" }}>{formik.errors.password}</Typography>
+                      <Typography sx={{ color: 'error.main' }}>{formik.errors.password}</Typography>
                     ) : null
                   }
-
                   error={formik.touched.password && Boolean(formik.errors.password)}
                   InputProps={{
                     endAdornment: (
@@ -151,7 +161,11 @@ function LogIn() {
                         <IconButton
                           aria-label="toggle password visibility"
                           onClick={() => setShowPassword((prev) => !prev)}
+                          onKeyDown={(event) => event.preventDefault()} // Prevent default behavior
                           edge="end"
+                          sx={{
+                            pr:3
+                          }}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
@@ -160,12 +174,20 @@ function LogIn() {
                   }}
                   sx={{
                     mb: 1,
-                    borderRadius: "12px",
-                    borderColor: formik.touched.password && formik.errors.password ? "red" : "#d4d7e3",
-                    background: "#fbfbfb",
-                    width: "100%",
+                    borderRadius: '12px',
+                    borderColor: formik.touched.password && formik.errors.password ? 'red' : '#d4d7e3',
+                    background: '#fbfbfb',
+                    width: '100%',
+                    'input[type="password"]::-ms-reveal': {
+                      display: 'none',
+                      width: 0,
+                      height: 0,
+                    },
+                    'input[type="password"]::-webkit-credentials-auto-fill-button': {
+                      visibility: 'hidden',
+                    },
                   }}
-                  {...formik.getFieldProps("password")}
+                  {...formik.getFieldProps('password')}
                 />
                 {/* link container inside form*/}
                 <Box
@@ -204,6 +226,9 @@ function LogIn() {
                   borderRadius: { lg: "16px", xs: "4px" },
                   fontSize: { lg: "20px", sm: "16px", xs: "12px" },
                   background: "#2a454e",
+                  "&:hover": {
+                    background: "#385a64",
+                  },
                 }}
               >
                 Log in
@@ -321,7 +346,7 @@ function LogIn() {
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                fontSize: { lg: "1.2rem", md: "1rem", sm: ".7", xs: ".5" },
+                fontSize: { lg: "1.2rem", md: "1rem", sm: ".7", xs: ".3" },
                 fontWeight: 400,
                 fontFamily: "Varela Round",
                 paddingTop: "2rem",
