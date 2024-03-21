@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
+import {toast} from "react-toastify";
 
 export interface UserData {
   id: number;
@@ -21,6 +22,7 @@ const useAuth = () => {
 
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
+    
     try {
       const response: AxiosResponse<{ data: UserData }> = await axios.post(
         `${BASE_URL}/login`,
@@ -37,8 +39,14 @@ const useAuth = () => {
         }
       );
       console.log(response);
-      setUser(response.data.data)
+      setUser(response.data.data);
     } catch (err) {
+      toast.error("An error occurred during login!");
+      setTimeout(() => {
+        toast.error("Check your connection and try again")
+      }, 3000); 
+    
+
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
         errorResponse.response?.data.message || "An error occurred during login"
