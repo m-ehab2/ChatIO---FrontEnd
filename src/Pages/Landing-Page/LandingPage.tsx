@@ -11,7 +11,7 @@ export default function LandingPage() {
 
         <Box sx={{ display:'flex', flexGrow: 0 , justifyContent :"space-between",padding:"10px"}} >
           <Box>
-            <img src={logo} width={250}/>
+            <img src={logo} width={280}/>
           </Box>
 
           <Box >
@@ -40,7 +40,7 @@ sx={{
   fontSize: { sm: "2.5rem", xs: "2rem" },
   fontFamily: "Varela Round",
   fontWeight: 700,
-  margin:"20px 0"
+  margin:"15px 0"
 }} >
 Enjoy the new experience of chating with global friends
 </Typography>
@@ -51,7 +51,7 @@ sx={{
   fontSize: { sm: "1rem", xs: "1rem" },
   fontFamily: "Varela Round",
   fontWeight: 300,
-  margin:"20px 0"
+  margin:"15px 0"
 }}>
 The best Application for you
 </Typography>
@@ -62,14 +62,14 @@ The best Application for you
     color :"white",
     padding : "10px 20px",
     textTransform:"capitalize",
-    margin:"20px 0",
+    margin:"15px 0",
   }}>Register Now</Button>
 </Link>
 
 </Box>
 
-<Box>
-  <img src="https://img.freepik.com/free-vector/online-world-concept-illustration_114360-2212.jpg?w=740&t=st=1710988292~exp=1710988892~hmac=d42efe517d1d4ecf4f452d9cd321c2147c6c53b4d37d40a3f24b58500dfe7a25" 
+<Box sx={{ width: "100%",}}>
+  <img src="https://img.freepik.com/free-vector/online-world-concept-illustration_114360-2212.jpg?w=740&t=st=1710988292~exp=1710988892~hmac=d42efe517d1d4ecf4f452d9cd321c2147c6c53b4d37d40a3f24b58500dfe7a25"
   alt="" />
 </Box>
 
