@@ -68,7 +68,7 @@ The best Application for you
 
 </Box>
 
-<Box sx={{ width: "100%",}}>
+<Box sx={{ width:"100%"}}>
   <img src="https://img.freepik.com/free-vector/online-world-concept-illustration_114360-2212.jpg?w=740&t=st=1710988292~exp=1710988892~hmac=d42efe517d1d4ecf4f452d9cd321c2147c6c53b4d37d40a3f24b58500dfe7a25"
   alt="" />
 </Box>
