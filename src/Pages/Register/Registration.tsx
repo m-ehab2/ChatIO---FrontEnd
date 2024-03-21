@@ -10,12 +10,11 @@ import RegisterButton from "../../components/RegisterButton";
 import GoogleButton from "../../components/GoogleButton";
 import FacebookButton from "../../components/FacebookButton";
 import { userSchema } from "../../Validations/UserSchema";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import useAuth from "../../Hooks/useAuth";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-
 const initialValues = {
   userName: "",
   email: "",
@@ -33,9 +32,6 @@ const Registration = () => {
     validationSchema: userSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        // console.log(event);
-        // event.preventDefault()
-
         console.log(values);
         await register(
           values.userName,
@@ -44,15 +40,6 @@ const Registration = () => {
           values.confirmPassword
         );
 
-        // if (error) {
-        //   toast.error(error);
-        //   console.log(error);
-
-        //   // nav("/");
-        // } else {
-        //   toast.success("user created successfully");
-        //   nav("/");
-        // }
         resetForm();
       } catch (error) {
         console.log(error, "hhhhhhhhhh");
@@ -194,7 +181,7 @@ const Registration = () => {
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={() => setShowPassword((prev) => !prev)}
-                      onKeyDown={(event) => event.preventDefault()} // Prevent default behavior
+                      onKeyDown={(event) => event.preventDefault()}
                       edge="end"
                       sx={{
                         pr: 3,
