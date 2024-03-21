@@ -1,12 +1,20 @@
-import { Box, Typography, Link, TextField } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Link,
+  TextField,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import RegisterButton from "../../components/RegisterButton";
-// import MyInput from "../../components/MyInput";
 import GoogleButton from "../../components/GoogleButton";
 import FacebookButton from "../../components/FacebookButton";
 import { userSchema } from "../../Validations/UserSchema";
-import { Link as RouterLink } from "react-router-dom";
-import { Form, Field, Formik, useFormik } from "formik";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 import useAuth from "../../Hooks/useAuth";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 const initialValues = {
   userName: "",
@@ -15,13 +23,19 @@ const initialValues = {
   confirmPassword: "",
 };
 const Registration = () => {
-  const { register } = useAuth();
+  const { register, error } = useAuth();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: userSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
+        // console.log(event);
+        // event.preventDefault()
+
         console.log(values);
         await register(
           values.userName,
@@ -29,7 +43,19 @@ const Registration = () => {
           values.password,
           values.confirmPassword
         );
+
+        // if (error) {
+        //   toast.error(error);
+        //   console.log(error);
+
+        //   // nav("/");
+        // } else {
+        //   toast.success("user created successfully");
+        //   nav("/");
+        // }
+        resetForm();
       } catch (error) {
+        console.log(error, "hhhhhhhhhh");
         console.error("register error:", error);
       }
     },
@@ -43,6 +69,8 @@ const Registration = () => {
           alignItems: "center",
           justifyContent: { md: "space-between", xs: "center" },
           marginLeft: { md: "190px" },
+          gap: "12px",
+          marginBottom: "23px",
         }}
       >
         <Typography
@@ -50,7 +78,7 @@ const Registration = () => {
             fontSize: { md: "2.5rem", sm: "2rem", xs: "1.5rem" },
             color: "#2A454E",
             fontWeight: "bold",
-
+            marginTop: "50px",
             paddingY: "14px",
           }}
         >
@@ -112,7 +140,6 @@ const Registration = () => {
               error={formik.touched.userName && Boolean(formik.errors.userName)}
               {...formik.getFieldProps("userName")}
             />
-
             <TextField
               sx={{
                 width: { md: "65%", xs: "100%" },
@@ -137,7 +164,6 @@ const Registration = () => {
               error={formik.touched.email && Boolean(formik.errors.email)}
               {...formik.getFieldProps("email")}
             />
-
             <TextField
               sx={{
                 width: { md: "65%", xs: "100%" },
@@ -148,7 +174,7 @@ const Registration = () => {
                     : "#d4d7e3",
                 background: "#fbfbfb",
               }}
-              type="password"
+              type={showPassword ? "text" : "password"}
               size="small"
               id="outlined-error-helper-text"
               label="Password"
@@ -162,8 +188,24 @@ const Registration = () => {
               }
               error={formik.touched.password && Boolean(formik.errors.password)}
               {...formik.getFieldProps("password")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      onKeyDown={(event) => event.preventDefault()} // Prevent default behavior
+                      edge="end"
+                      sx={{
+                        pr: 3,
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
-
             <TextField
               sx={{
                 width: { md: "65%", xs: "100%" },
@@ -175,7 +217,7 @@ const Registration = () => {
                     : "#d4d7e3",
                 background: "#fbfbfb",
               }}
-              type="password"
+              type={showCPassword ? "text" : "password"}
               size="small"
               id="outlined-error-helper-text"
               label="Confirm password"
@@ -193,6 +235,23 @@ const Registration = () => {
                 Boolean(formik.errors.confirmPassword)
               }
               {...formik.getFieldProps("confirmPassword")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowCPassword((prev) => !prev)}
+                      onKeyDown={(event) => event.preventDefault()}
+                      edge="end"
+                      sx={{
+                        pr: 3,
+                      }}
+                    >
+                      {showCPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <RegisterButton children="Register" />
           </Box>
