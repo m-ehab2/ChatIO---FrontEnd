@@ -1,16 +1,29 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
-import { UserData } from "../../../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 interface OneChatProps {
-  isUnread: boolean;
+  isUnread: number;
   lastMessage?: string;
-  user?: UserData;
+  user?: string;
+  image: string;
+  id: string;
 }
 
-export default function OneChat({ isUnread, user, lastMessage }: OneChatProps) {
+export default function OneChat({
+  isUnread,
+  user,
+  lastMessage,
+  image,
+  id,
+}: OneChatProps) {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/chat/" + id);
+  }
   return (
     <Box
+      onClick={handleClick}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -24,8 +37,8 @@ export default function OneChat({ isUnread, user, lastMessage }: OneChatProps) {
       }}
     >
       <Avatar
-        src={user?.image || ""}
-        alt={user?.name || "John Doe"}
+        src={image || ""}
+        alt={user || "John Doe"}
         sx={{ width: "45px", height: "45px" }}
       />
       <Box sx={{ flexGrow: "1" }}>
@@ -35,7 +48,7 @@ export default function OneChat({ isUnread, user, lastMessage }: OneChatProps) {
           fontWeight={"600"}
           fontFamily={"Inter"}
         >
-          {user?.name || "John Doe"}
+          {user || "John Doe"}
         </Typography>
         <Typography
           color={"#959595"}
@@ -43,7 +56,7 @@ export default function OneChat({ isUnread, user, lastMessage }: OneChatProps) {
           fontWeight={"400"}
           fontFamily={"Inter"}
         >
-          {lastMessage || "Start chatting " + (user?.name || "John Doe")}
+          {lastMessage || "Start chatting " + (user || "John Doe")}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "end" }}>
@@ -66,8 +79,13 @@ export default function OneChat({ isUnread, user, lastMessage }: OneChatProps) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              color: "white",
+              fontFamily: "Roboto",
+              fontWeight: "300",
             }}
-          ></Box>
+          >
+            {isUnread}
+          </Box>
         ) : (
           <Box
             sx={{
