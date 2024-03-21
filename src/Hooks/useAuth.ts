@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useUser } from "../Context/UserContext";
 
 export interface UserData {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   image: string;
@@ -18,25 +19,29 @@ const useAuth = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { loginUser, logoutUser } = useUser();
 
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     try {
-      const response: AxiosResponse<{ data: UserData }> = await axios.post(
-        `${BASE_URL}/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
+      const response: AxiosResponse<{ data: { user: UserData } }> =
+        await axios.post(
+          `${BASE_URL}/login`,
+          {
+            email,
+            password,
           },
-        }
-      );
+          {
+            withCredentials: true,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      console.log(response.data.data);
       setUser(response.data.data);
+      loginUser(response.data.data);
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
@@ -85,6 +90,7 @@ const useAuth = () => {
 
   const logout = (): void => {
     setUser(null);
+    logoutUser();
   };
 
   return { user, error, loading, login, register, logout };
