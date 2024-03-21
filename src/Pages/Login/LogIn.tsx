@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Link, useMediaQuery, InputAdornment, IconButton } from "@mui/material";
+import { Box, TextField, Button, Typography, Link, useMediaQuery, InputAdornment, IconButton, CircularProgress } from "@mui/material";
 import { useFormik } from "formik";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
@@ -15,7 +15,9 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 function LogIn() {
 
   const { login, loading, error } = useAuth();
-  
+
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+
 
 
   const theme = useTheme();
@@ -41,9 +43,12 @@ function LogIn() {
     onSubmit: async (values) => {
       try {
         console.log(values)
+        setIsSubmitting(true);
         await login(values.email, values.password);
       } catch (error) {
         console.error("Login error:", error);
+      }finally {
+        setIsSubmitting(false); 
       }
     },
   });
@@ -142,6 +147,7 @@ function LogIn() {
                     background: "#fbfbfb",
                     width: "100%",
                   }}
+                  disabled={isSubmitting} 
                   {...formik.getFieldProps("email")}
                 />
                 <TextField
@@ -187,6 +193,8 @@ function LogIn() {
                       visibility: 'hidden',
                     },
                   }}
+                  disabled={isSubmitting} 
+
                   {...formik.getFieldProps('password')}
                 />
                 {/* link container inside form*/}
@@ -231,7 +239,7 @@ function LogIn() {
                   },
                 }}
               >
-                Log in
+                {isSubmitting ? <CircularProgress size={24} /> : "Log in"}
               </Button>
             </Box>
 
