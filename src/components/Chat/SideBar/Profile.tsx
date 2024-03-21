@@ -9,8 +9,10 @@ import {
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import imgPath from "../../../assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg";
+import { useUser } from "../../../Context/UserContext";
 
 export default function Profile() {
+  const { user } = useUser();
   return (
     <Box sx={{ padding: "0px 5px" }}>
       <Box
@@ -29,7 +31,7 @@ export default function Profile() {
         >
           <Avatar
             alt="Remy Sharp"
-            src={imgPath}
+            src={user?.image}
             sx={{ width: 45, height: 45 }}
           />
           <Box>
@@ -39,7 +41,7 @@ export default function Profile() {
               sx={{ lineHeight: "1", color: "#385A64" }}
               fontFamily={"Inter"}
             >
-              David Peters
+              {user?.name}
             </Typography>
             <Typography
               fontSize={"13px"}
