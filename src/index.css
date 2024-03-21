@@ -1,5 +1,5 @@
 
-body {
+body 
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -62,4 +62,19 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+/* Button Landing Page */
+.login-btn{
+  border: 1px solid #385A64 !important ;
+}
+
+.login-btn:hover{
+  background-color: #385A64 !important ;
+  color: white;
+}
+.register-btn:hover{
+background-color: transparent !important;
+border: 1px solid #385A64 !important ;
+color: #385A64 !important ;
 }

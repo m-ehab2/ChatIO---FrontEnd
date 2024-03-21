@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LogIn from "./Pages/Login/LogIn";
 import Registration from "./Pages/Register/Registration";
+import LandingPage from "./Pages/Landing-Page/LandingPage";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            <Route path={"/"} element={<LogIn />} />
+            <Route path={"/"} element={<LandingPage />} />
+            <Route path={"/login"} element={<LogIn />} />
             <Route path={"/register"} element={<Registration />} />
             <Route path={"/chat"} element={<Chat />} />
           </Routes>

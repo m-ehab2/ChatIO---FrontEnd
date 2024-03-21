@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 import path from "../../assets/login.jpeg";
+import iconGoole from "../../assets/Google.png"
+import iconFaceBook from "../../assets/Vector.png"
 
 function LogIn() {
   const formik = useFormik({
@@ -219,7 +221,9 @@ function LogIn() {
                   alignItems: "center",
                 }}
               >
-                <Box sx={{ display: "flex", alignItems: "center" }}>X</Box>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <img src={iconGoole}/>
+                </Box>
                 <Typography
                   sx={{
                     display: { md: "flex", xs: "none" },
@@ -246,7 +250,9 @@ function LogIn() {
                   alignItems: "center",
                 }}
               >
-                <Box>X</Box>
+                <Box>
+                  <img src={iconFaceBook}/>
+                </Box>
                 <Typography
                   sx={{
                     display: { md: "flex", xs: "none" },

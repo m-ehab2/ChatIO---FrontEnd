@@ -1,5 +1,6 @@
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+import { Box } from "@mui/material";
+// import {Box}  from "@mui/material/Box";
 interface prop {
   type: "string" | "number" | "password" | "email" | "date";
   name: string;
