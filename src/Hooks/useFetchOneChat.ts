@@ -24,11 +24,6 @@ interface ErrorResponse {
   message: string;
 }
 const useFetchOneChat = (id: string) => {
-  // const [chat, setChat] = useState<OneChat | null>({
-  //   chatImage: "",
-  //   chatName: "",
-  //   data: [{ sender: { image: "" } }],
-  // });
   const [chat, setChat] = useState<OneChat | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
