@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export default function MainChat() {
   const { pathname } = useLocation();
   const newChat = pathname.startsWith("/chat/new");
   useEffect(() => {
-    newChat ? createChat(id) : fetchChat();
+    newChat ? createChat(id || "") : fetchChat();
   }, [pathname, newChat]);
   return (
     <Box
@@ -44,7 +44,20 @@ export default function MainChat() {
               <MessageInput />
             </>
           ) : (
-            ""
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "20px",
+                color: "#385A64",
+              }}
+            >
+              <CircularProgress size={"100px"} color="inherit" />
+            </Box>
           )}
         </Box>
       ) : (

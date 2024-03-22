@@ -1,10 +1,15 @@
-import { Box, Typography, Chip, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Chip,
+  IconButton,
+  LinearProgress,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import OneChat from "./OneChat";
 import { ChatData } from "../../../Hooks/useFetchAllChats";
-// import useAuth from "../../../Hooks/useAuth";
 import { UserData } from "../../../Hooks/useFetchAllUsers";
 
 interface ChatsProps {
@@ -15,14 +20,6 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
-  // const { login } = useAuth();
-  useEffect(() => {
-    //   login("renadibrahim022@gmail.com", "12345678");
-  }, []);
-  // const [open, setOpen] = useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
   function handleClick(e: string) {
     setActiveTab(e);
   }
@@ -112,8 +109,9 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           padding: "0px 10px",
         }}
       >
-        {activeTab === "chats"
-          ? chats.map((chat) => {
+        {activeTab === "chats" ? (
+          chats.length ? (
+            chats.map((chat) => {
               return (
                 <OneChat
                   key={chat._id}
@@ -126,9 +124,13 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                 />
               );
             })
-          : null}
-        {activeTab === "groups"
-          ? groupedChats.map((chat) => {
+          ) : (
+            <LinearProgress />
+          )
+        ) : null}
+        {activeTab === "groups" ? (
+          groupedChats ? (
+            groupedChats.map((chat) => {
               return (
                 <OneChat
                   key={chat._id}
@@ -141,9 +143,15 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                 />
               );
             })
-          : ""}
-        {activeTab === "contacts"
-          ? users.map((user) => {
+          ) : (
+            <LinearProgress />
+          )
+        ) : (
+          ""
+        )}
+        {activeTab === "contacts" ? (
+          users ? (
+            users.map((user) => {
               return (
                 <OneChat
                   key={user._id}
@@ -155,7 +163,12 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                 />
               );
             })
-          : ""}
+          ) : (
+            <LinearProgress />
+          )
+        ) : (
+          ""
+        )}
       </Box>
       {activeTab === "groups" ? (
         <IconButton
