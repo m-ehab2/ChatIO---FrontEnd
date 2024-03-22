@@ -8,6 +8,7 @@ export interface MessageData {
   _id: string;
   chat: string;
   content: string;
+  media: string;
   createdAt: string;
   seen: string[];
   sender: UserData;
@@ -30,13 +31,14 @@ const useFetchOneChat = (id: string) => {
   const fetchChat = async () => {
     try {
       setChat(null);
-      const response = await axios.get(chatsURL, {
-        headers: {
-          "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response.data);
+      const response =
+        id &&
+        (await axios.get(chatsURL, {
+          headers: {
+            "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
+            "Content-Type": "application/json",
+          },
+        }));
       setChat(response.data);
       setLoading(false);
     } catch (error) {

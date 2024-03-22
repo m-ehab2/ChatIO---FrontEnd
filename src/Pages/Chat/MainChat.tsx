@@ -7,11 +7,10 @@ import StatusBar from "../../components/Chat/MainChat/StatusBar";
 import MessageInput from "../../components/Chat/MainChat/MessageInput";
 import ChatWindow from "../../components/Chat/MainChat/ChatWindow";
 import useFetchOneChat from "../../Hooks/useFetchOneChat";
-import { SideBarProps } from "./SideBar";
 
-export default function MainChat({ chats, groupedChats, users }: SideBarProps) {
+export default function MainChat() {
   const { id } = useParams<{ id: string }>();
-  const { loading, chat, error, fetchChat } = useFetchOneChat(id || "");
+  const { chat, fetchChat } = useFetchOneChat(id || "");
   useEffect(() => {
     fetchChat();
   }, [id]);
@@ -34,9 +33,15 @@ export default function MainChat({ chats, groupedChats, users }: SideBarProps) {
             justifyContent: "space-between",
           }}
         >
-          <StatusBar name={chat?.chatName} img={chat?.chatImage} />
-          <ChatWindow chat={chat} />
-          <MessageInput />
+          {chat ? (
+            <>
+              <StatusBar name={chat?.chatName} img={chat?.chatImage} />
+              <ChatWindow chat={chat} />
+              <MessageInput />
+            </>
+          ) : (
+            ""
+          )}
         </Box>
       ) : (
         <NeutralBox />

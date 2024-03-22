@@ -25,7 +25,7 @@ export default function Chat() {
           <SideBar chats={chats} groupedChats={groupedChats} users={users} />
         </Grid>
         <Grid sx={{ height: "100%" }} item md={9}>
-          <MainChat chats={chats} groupedChats={groupedChats} users={users} />
+          <MainChat />
         </Grid>
       </Grid>
     </Box>

@@ -6,9 +6,9 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import RegisterButton from "../../components/RegisterButton";
-import GoogleButton from "../../components/GoogleButton";
-import FacebookButton from "../../components/FacebookButton";
+import RegisterButton from "../../components/Register/RegisterButton";
+import GoogleButton from "../../components/Register/GoogleButton";
+import FacebookButton from "../../components/Register/FacebookButton";
 import { userSchema } from "../../Validations/UserSchema";
 import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";

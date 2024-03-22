@@ -8,11 +8,22 @@ import {
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import imgPath from "../../../assets/christopher-campbell-rDEOVtE7vOs-unsplash.jpg";
 import { useUser } from "../../../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import useAuth from "../../../Hooks/useAuth";
 
 export default function Profile() {
   const { user } = useUser();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  function handleNav() {
+    navigate("/chat");
+  }
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
   return (
     <Box sx={{ padding: "0px 5px" }}>
       <Box
@@ -55,6 +66,7 @@ export default function Profile() {
         </Box>
         <Box>
           <IconButton
+            onClick={handleNav}
             aria-label="Edit"
             size="small"
             sx={{
@@ -64,6 +76,18 @@ export default function Profile() {
             }}
           >
             <EditOutlinedIcon fontSize="inherit" />
+          </IconButton>
+          <IconButton
+            onClick={handleLogout}
+            aria-label="Edit"
+            size="small"
+            sx={{
+              borderRadius: "50%",
+              fontSize: "20px",
+              color: "#545454",
+            }}
+          >
+            <LogoutIcon fontSize="inherit" />
           </IconButton>
         </Box>
       </Box>

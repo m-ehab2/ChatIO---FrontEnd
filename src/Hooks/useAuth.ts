@@ -25,21 +25,20 @@ const useAuth = () => {
     setLoading(true);
 
     try {
-      const response: AxiosResponse<{ data: { user: UserData } }> =
-        await axios.post(
-          `${BASE_URL}/login`,
-          {
-            email,
-            password,
+      const response: AxiosResponse<{ data: UserData }> = await axios.post(
+        `${BASE_URL}/login`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
           },
-          {
-            withCredentials: true,
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        }
+      );
       console.log(response.data.data);
       setUser(response.data.data);
       loginUser(response.data.data);

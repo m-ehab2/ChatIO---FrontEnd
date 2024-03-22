@@ -1,13 +1,14 @@
-import { Box, IconButton, TextField, styled } from "@mui/material";
+import { Box, Button, IconButton, TextField, styled } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import useSendMessage from "../../../Hooks/useSendMessage";
 
 export default function MessageInput() {
   const [message, setMessage] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
   const { sendMessage } = useSendMessage();
   const { id } = useParams<{ id: string }>();
 
@@ -34,9 +35,26 @@ export default function MessageInput() {
     },
   });
   function handleClick() {
-    message && sendMessage({ chatId: id || "", content: message });
+    sendMessage({ chatId: id || "", content: message, media: image });
     setMessage("");
+    setImage(null);
   }
+  function handlePhotoUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    setImage(file);
+  }
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   return (
     <Box
@@ -49,6 +67,7 @@ export default function MessageInput() {
         justifyContent: "space-between",
         padding: "10px 30px",
         height: "10%",
+        gap: "10px",
       }}
     >
       <CssTextField
@@ -58,25 +77,31 @@ export default function MessageInput() {
         fullWidth
         placeholder="Write Something..."
       />
-      <IconButton
-        aria-label="send"
-        onClick={handleClick}
+      <Button
+        component="label"
+        role={undefined}
+        variant="contained"
+        tabIndex={-1}
+        startIcon={<AddAPhotoIcon fontSize="inherit" />}
         sx={{
-          borderRadius: "50%",
-          fontSize: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           color: "#f5f5f5",
           backgroundColor: "#385A64",
-          padding: "7px",
-          marginLeft: "20px",
           "&:hover": {
             color: "#f5f5f5",
             backgroundColor: "#284A54",
           },
         }}
       >
-        <AddAPhotoIcon fontSize="inherit" />
-      </IconButton>
+        <VisuallyHiddenInput
+          onChange={(e) => handlePhotoUpload(e)}
+          type="file"
+        />
+      </Button>
       <IconButton
+        disabled={!message && !image}
         aria-label="send"
         onClick={handleClick}
         sx={{
@@ -85,7 +110,6 @@ export default function MessageInput() {
           color: "#f5f5f5",
           backgroundColor: "#385A64",
           padding: "7px",
-          marginLeft: "20px",
           "&:hover": {
             color: "#f5f5f5",
             backgroundColor: "#284A54",
