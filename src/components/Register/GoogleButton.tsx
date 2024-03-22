@@ -1,8 +1,9 @@
 // import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import { Children, ReactNode } from "react";
-import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import { ReactNode } from "react";
+import GoogleIcon from "@mui/icons-material/Google";
 import { styled } from "@mui/material/styles";
+import { FcGoogle } from "react-icons/fc";
 
 const CustomButton = styled(Button)({
   textTransform: "none", // Prevents uppercase transformation
@@ -23,23 +24,16 @@ interface prop {
   children: ReactNode;
 }
 
-const FacebookButton = ({ children }: prop) => {
+const GoogleButton = ({ children }: prop) => {
   return (
     <CustomButton
       variant="contained"
-      startIcon={
-        <FacebookRoundedIcon
-          sx={{
-            color: "blue",
-          }}
-        />
-      }
+      startIcon={<FcGoogle />}
       sx={{
         backgroundColor: "#E8F0F1",
         color: "black",
         width: { md: "65%", xs: "100%" },
         height: "45px",
-        fontSize: "1.2rem",
         fontFamily: "Arial",
         borderRadius: "20px",
         textDecoration: "none",
@@ -57,4 +51,4 @@ const FacebookButton = ({ children }: prop) => {
   );
 };
 
-export default FacebookButton;
+export default GoogleButton;
