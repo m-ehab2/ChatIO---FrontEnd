@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import {toast} from "react-toastify";
+import { useUser } from "../Context/UserContext";
 
 export interface UserData {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   image: string;
@@ -19,34 +19,32 @@ const useAuth = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { loginUser, logoutUser } = useUser();
 
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     
     try {
-      const response: AxiosResponse<{ data: UserData }> = await axios.post(
-        `${BASE_URL}/login`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response);
-      setUser(response.data.data);
-    } catch (err) {
-      toast.error("An error occurred during login!");
-      setTimeout(() => {
-        toast.error("Check your connection and try again")
-      }, 3000); 
-    
 
+      const response: AxiosResponse<{ data: { user: UserData } }> =
+        await axios.post(
+          `${BASE_URL}/login`,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      console.log(response.data.data);
+      setUser(response.data.data);
+      loginUser(response.data.data);
+    } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
         errorResponse.response?.data.message || "An error occurred during login"
@@ -80,13 +78,20 @@ const useAuth = () => {
           },
         }
       );
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
       setUser(response.data.data);
+      nav("/");
+      toast.success("User created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
-      setError(
-        errorResponse.response?.data.message ||
-          "An error occurred during registration"
-      );
+      setError(err.response.data.message);
+      console.error(err.response.data.message);
+      toast.error(err.response.data.message);
+
+      console.log("this is response");
     } finally {
       setLoading(false);
     }
@@ -94,6 +99,7 @@ const useAuth = () => {
 
   const logout = (): void => {
     setUser(null);
+    logoutUser();
   };
 
   return { user, error, loading, login, register, logout };
