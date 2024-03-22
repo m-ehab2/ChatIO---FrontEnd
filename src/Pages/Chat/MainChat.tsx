@@ -1,19 +1,23 @@
 import { Box } from "@mui/material";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import NeutralBox from "../../components/Chat/MainChat/NeutralBox";
 import StatusBar from "../../components/Chat/MainChat/StatusBar";
 import MessageInput from "../../components/Chat/MainChat/MessageInput";
 import ChatWindow from "../../components/Chat/MainChat/ChatWindow";
 import useFetchOneChat from "../../Hooks/useFetchOneChat";
+import useCreateChat from "../../Hooks/useCreateChat";
 
 export default function MainChat() {
   const { id } = useParams<{ id: string }>();
   const { chat, fetchChat } = useFetchOneChat(id || "");
+  const { createChat } = useCreateChat();
+  const { pathname } = useLocation();
+  const newChat = pathname.startsWith("/chat/new");
   useEffect(() => {
-    fetchChat();
-  }, [id]);
+    newChat ? createChat(id) : fetchChat();
+  }, [pathname, newChat]);
   return (
     <Box
       sx={{
