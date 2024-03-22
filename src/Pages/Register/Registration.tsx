@@ -284,7 +284,7 @@ const Registration = () => {
               <Typography sx={{}}>have an account? </Typography>
               <Typography sx={{ color: "#2A454E" }}>
                 <Link
-                  to={"/"}
+                  to={"/login"}
                   component={RouterLink}
                   sx={{ textDecoration: "none" }}
                 >
