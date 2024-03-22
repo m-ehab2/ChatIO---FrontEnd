@@ -23,9 +23,8 @@ const useAuth = () => {
 
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
-    
-    try {
 
+    try {
       const response: AxiosResponse<{ data: { user: UserData } }> =
         await axios.post(
           `${BASE_URL}/login`,
@@ -78,20 +77,12 @@ const useAuth = () => {
           },
         }
       );
-<<<<<<< HEAD
-=======
-
->>>>>>> main
       setUser(response.data.data);
-      nav("/");
-      toast.success("User created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
-      setError(err.response.data.message);
-      console.error(err.response.data.message);
-      toast.error(err.response.data.message);
-
-      console.log("this is response");
+      setError(
+        errorResponse.response?.data.message || "An error occurred during login"
+      );
     } finally {
       setLoading(false);
     }
