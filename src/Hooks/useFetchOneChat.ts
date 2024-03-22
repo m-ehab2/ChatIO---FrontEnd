@@ -8,6 +8,7 @@ export interface MessageData {
   _id: string;
   chat: string;
   content: string;
+  media: string;
   createdAt: string;
   seen: string[];
   sender: UserData;
@@ -23,6 +24,11 @@ interface ErrorResponse {
   message: string;
 }
 const useFetchOneChat = (id: string) => {
+  // const [chat, setChat] = useState<OneChat | null>({
+  //   chatImage: "",
+  //   chatName: "",
+  //   data: [{ sender: { image: "" } }],
+  // });
   const [chat, setChat] = useState<OneChat | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,13 +36,14 @@ const useFetchOneChat = (id: string) => {
   const fetchChat = async () => {
     try {
       setChat(null);
-      const response = await axios.get(chatsURL, {
-        headers: {
-          "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response.data);
+      const response =
+        id &&
+        (await axios.get(chatsURL, {
+          headers: {
+            "Access-Control-Allow-Origin": "http://127.0.0.1:5173",
+            "Content-Type": "application/json",
+          },
+        }));
       setChat(response.data);
       setLoading(false);
     } catch (error) {
