@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import OneChat from "./OneChat";
 import { ChatData } from "../../../Hooks/useFetchAllChats";
-import useAuth from "../../../Hooks/useAuth";
+// import useAuth from "../../../Hooks/useAuth";
 import { UserData } from "../../../Hooks/useFetchAllUsers";
 
 interface ChatsProps {
@@ -15,10 +15,9 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
-  const { login, register } = useAuth();
+  // const { login } = useAuth();
   useEffect(() => {
-    login("renadibrahim022@gmail.com", "12345678");
-    register("Test for useAuth", "test@gmail.com", "123456789", "123456789");
+    //   login("renadibrahim022@gmail.com", "12345678");
   }, []);
   // const [open, setOpen] = useState(false);
   // const handleOpen = () => setOpen(true);
