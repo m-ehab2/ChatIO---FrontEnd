@@ -2,6 +2,7 @@
 import React, { createContext, useState, useContext } from "react";
 import { UserData } from "../Hooks/useAuth";
 
+
 interface UserContextType {
   user: UserData | null;
   loginUser(userData: UserData): void;

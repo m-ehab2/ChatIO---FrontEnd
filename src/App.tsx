@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LogIn from "./Pages/Login/LogIn";
 import Registration from "./Pages/Register/Registration";
+import EditProfile from "./Pages/Edit-profile/EditProfile";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
             <Route path={"/"} element={<LogIn />} />
             <Route path={"/register"} element={<Registration />} />
             <Route path={"/chat"} element={<Chat />} />
+            <Route path={"/edit-profile"} element={<EditProfile />} />
+
           </Routes>
         </BrowserRouter>
       </UserProvider>
