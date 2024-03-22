@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 export interface SendMessageData {
   chatId: string;
-  content: string;
+  content: string | null;
+  media: File | null;
 }
 
 interface ErrorResponse {
@@ -12,22 +13,21 @@ interface ErrorResponse {
 }
 
 const useSendMessage = () => {
-  const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const sendMessage = async (messageData: SendMessageData) => {
     try {
-      setMessage(messageData.content);
       setLoading(true);
       const formData = new FormData();
       formData.append("chatId", messageData.chatId);
-      formData.append("content", messageData.content);
-
+      messageData.content && formData.append("content", messageData.content);
+      messageData.media && formData.append("media", messageData.media);
       const response = await axios.post(
         "http://localhost:8000/api/v1/message",
         formData
       );
+      setError(null);
       toast.success("Message Sent Successfully");
       setLoading(false);
       console.log("Message sent successfully:", response.data);
@@ -38,10 +38,11 @@ const useSendMessage = () => {
         errorResponse.response?.data.message ||
           "An error occurred while sending the message"
       );
+      toast.error("Error Sending Message");
     }
   };
 
-  return { error, loading, sendMessage, message };
+  return { error, loading, sendMessage };
 };
 
 export default useSendMessage;
