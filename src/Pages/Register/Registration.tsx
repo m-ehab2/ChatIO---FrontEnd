@@ -5,6 +5,7 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import RegisterButton from "../../components/Register/RegisterButton";
 import GoogleButton from "../../components/Register/GoogleButton";
@@ -19,30 +20,28 @@ const initialValues = {
   userName: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  passwordConfirm: "",
 };
 const Registration = () => {
-  const { register, error } = useAuth();
-
+  const { register, loading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: userSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       try {
         console.log(values);
         await register(
           values.userName,
           values.email,
           values.password,
-          values.confirmPassword
+          values.passwordConfirm
         );
 
-        resetForm();
+        // console.log(error);
       } catch (error) {
-        console.log(error, "hhhhhhhhhh");
         console.error("register error:", error);
       }
     },
@@ -124,6 +123,7 @@ const Registration = () => {
                   </Typography>
                 ) : null
               }
+              disabled={loading}
               error={formik.touched.userName && Boolean(formik.errors.userName)}
               {...formik.getFieldProps("userName")}
             />
@@ -148,6 +148,7 @@ const Registration = () => {
                   </Typography>
                 ) : null
               }
+              disabled={loading}
               error={formik.touched.email && Boolean(formik.errors.email)}
               {...formik.getFieldProps("email")}
             />
@@ -173,6 +174,7 @@ const Registration = () => {
                   </Typography>
                 ) : null
               }
+              disabled={loading}
               error={formik.touched.password && Boolean(formik.errors.password)}
               {...formik.getFieldProps("password")}
               InputProps={{
@@ -198,8 +200,8 @@ const Registration = () => {
                 width: { md: "65%", xs: "100%" },
                 borderRadius: "40px",
                 borderColor:
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
+                  formik.touched.passwordConfirm &&
+                  formik.errors.passwordConfirm
                     ? "red"
                     : "#d4d7e3",
                 background: "#fbfbfb",
@@ -210,18 +212,19 @@ const Registration = () => {
               label="Confirm password"
               variant="outlined"
               helperText={
-                formik.touched.confirmPassword &&
-                formik.errors.confirmPassword ? (
+                formik.touched.passwordConfirm &&
+                formik.errors.passwordConfirm ? (
                   <Typography sx={{ color: "e06e6e" }}>
-                    {formik.errors.confirmPassword}
+                    {formik.errors.passwordConfirm}
                   </Typography>
                 ) : null
               }
+              disabled={loading}
               error={
-                formik.touched.confirmPassword &&
-                Boolean(formik.errors.confirmPassword)
+                formik.touched.passwordConfirm &&
+                Boolean(formik.errors.passwordConfirm)
               }
-              {...formik.getFieldProps("confirmPassword")}
+              {...formik.getFieldProps("passwordConfirm")}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -240,7 +243,9 @@ const Registration = () => {
                 ),
               }}
             />
-            <RegisterButton children="Register" />
+            <RegisterButton
+              children={loading ? <CircularProgress size={24} /> : "Register"}
+            />
           </Box>
 
           <Box
