@@ -3,7 +3,6 @@ import Profile from "../../components/Chat/SideBar/Profile";
 import Chats from "../../components/Chat/SideBar/Chats";
 import { ChatData } from "../../Hooks/useFetchAllChats";
 import { UserData } from "../../Hooks/useFetchAllUsers";
-import { useParams } from "react-router-dom";
 
 export interface SideBarProps {
   chats: ChatData[];
