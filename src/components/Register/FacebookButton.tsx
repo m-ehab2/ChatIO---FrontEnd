@@ -37,7 +37,7 @@ const FacebookButton = ({ children }: prop) => {
       sx={{
         backgroundColor: "#E8F0F1",
         color: "black",
-        width: { md: "59%", xs: "100%" },
+        width: { md: "65%", xs: "100%" },
         height: "45px",
         fontFamily: "Arial",
         borderRadius: "20px",

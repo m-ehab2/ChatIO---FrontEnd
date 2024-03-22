@@ -76,13 +76,17 @@ const useAuth = () => {
           },
         }
       );
+
       setUser(response.data.data);
+      nav("/");
+      toast.success("User created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
-      setError(
-        errorResponse.response?.data.message ||
-          "An error occurred during registration"
-      );
+      setError(err.response.data.message);
+      console.error(err.response.data.message);
+      toast.error(err.response.data.message);
+
+      console.log("this is response");
     } finally {
       setLoading(false);
     }
