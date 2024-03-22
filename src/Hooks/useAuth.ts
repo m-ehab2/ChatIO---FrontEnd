@@ -7,6 +7,7 @@ export interface UserData {
   name: string;
   email: string;
   image: string;
+  status: string;
 }
 
 interface ErrorResponse {
