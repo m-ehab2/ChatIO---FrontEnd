@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import OneChat from "./OneChat";
 import { ChatData } from "../../../Hooks/useFetchAllChats";
-import useAuth from "../../../Hooks/useAuth";
+// import useAuth from "../../../Hooks/useAuth";
 import { UserData } from "../../../Hooks/useFetchAllUsers";
 
 interface ChatsProps {
@@ -15,15 +15,15 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
-  const { login } = useAuth();
+  // const { login } = useAuth();
   useEffect(() => {
-    login("renadibrahim022@gmail.com", "12345678");
+    // login("renadibrahim022@gmail.com", "12345678");
   }, []);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
-  function handleClick(e) {
+  function handleClick(e: string) {
     setActiveTab(e);
   }
 
@@ -47,7 +47,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           onClick={() => handleClick("chats")}
           variant="outlined"
           sx={{
-            background: activeTab === "chats" && "#4E7C89",
+            background: activeTab === "chats" ? "#4E7C89" : "",
             fontFamily: "Inter",
             fontWeight: "500",
             color: "white",
@@ -67,7 +67,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           onClick={() => handleClick("groups")}
           variant="outlined"
           sx={{
-            background: activeTab === "groups" && "#4E7C89",
+            background: activeTab === "groups" ? "#4E7C89" : "",
             fontFamily: "Inter",
             fontWeight: "500",
             color: "white",
@@ -87,7 +87,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           onClick={() => handleClick("contacts")}
           variant="outlined"
           sx={{
-            background: activeTab === "contacts" && "#4E7C89",
+            background: activeTab === "contacts" ? "#4E7C89" : "",
             fontFamily: "Inter",
             fontWeight: "500",
             color: "white",
@@ -148,6 +148,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                   user={user.name}
                   image={user.image}
                   id={user._id}
+                  isUnread={0}
                 />
               );
             })
