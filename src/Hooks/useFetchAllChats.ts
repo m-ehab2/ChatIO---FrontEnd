@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
-import { UserData } from "./useFetchAllUsers";
+import { MessageData } from "./useFetchOneChat";
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
-
-export interface MessageData {
-  chat: string;
-  content: string;
-  createdAt: string;
-  seen: string[];
-  sender: UserData;
-  _id: string;
-}
 
 export interface ChatData {
   _id: string;
