@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import OneChat from "./OneChat";
 import { ChatData } from "../../../Hooks/useFetchAllChats";
-// import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../../Hooks/useAuth";
 import { UserData } from "../../../Hooks/useFetchAllUsers";
 
 interface ChatsProps {
@@ -15,9 +15,10 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
-  // const { login } = useAuth();
+  const { login, register } = useAuth();
   useEffect(() => {
-    // login("renadibrahim022@gmail.com", "12345678");
+    login("renadibrahim022@gmail.com", "12345678");
+    register("Test for useAuth", "test@gmail.com", "123456789", "123456789");
   }, []);
   // const [open, setOpen] = useState(false);
   // const handleOpen = () => setOpen(true);
@@ -122,6 +123,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                   image={chat.image}
                   isUnread={chat.unseenMessagesCount}
                   id={chat._id}
+                  isUser={false}
                 />
               );
             })
@@ -136,6 +138,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                   image={chat.image}
                   isUnread={chat.unseenMessagesCount}
                   id={chat._id}
+                  isUser={false}
                 />
               );
             })
@@ -149,6 +152,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
                   image={user.image}
                   id={user._id}
                   isUnread={0}
+                  isUser={true}
                 />
               );
             })
