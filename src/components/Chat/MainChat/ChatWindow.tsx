@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import OneMessage from "./OneMessage";
-import { OneChat } from "../../../Hooks/useFetchOneChat";
-import { MessageData } from "../../../Hooks/useFetchAllChats";
+import { MessageData, OneChat } from "../../../Hooks/useFetchOneChat";
 
 interface ChatWindow {
   chat: OneChat | null;
@@ -27,6 +26,7 @@ export default function ChatWindow({ chat }: ChatWindow) {
           image={message.sender.image}
           key={message._id}
           senderId={message.sender._id}
+          media={message.media}
         />
       ))}
     </Box>
