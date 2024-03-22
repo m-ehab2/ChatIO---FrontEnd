@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
-
+import { useUser } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export interface UserData {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   image: string;
+  status: string;
 }
 
 interface ErrorResponse {
@@ -18,9 +21,11 @@ const useAuth = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const { loginUser, logoutUser } = useUser();
+  const nav = useNavigate();
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
+
     try {
       const response: AxiosResponse<{ data: UserData }> = await axios.post(
         `${BASE_URL}/login`,
@@ -36,7 +41,9 @@ const useAuth = () => {
           },
         }
       );
+      console.log(response.data.data);
       setUser(response.data.data);
+      loginUser(response.data.data);
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
@@ -72,12 +79,14 @@ const useAuth = () => {
         }
       );
       setUser(response.data.data);
+      nav("/");
+      toast.success("User account created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
-        errorResponse.response?.data.message ||
-          "An error occurred during registration"
+        err.response.data.message
       );
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -85,6 +94,7 @@ const useAuth = () => {
 
   const logout = (): void => {
     setUser(null);
+    logoutUser();
   };
 
   return { user, error, loading, login, register, logout };

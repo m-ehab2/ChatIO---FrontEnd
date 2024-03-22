@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
+import { MessageData } from "./useFetchOneChat";
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
+
 export interface ChatData {
-  id: number;
-  name: string;
-  email: string;
+  _id: string;
+  chatName: string;
   image: string;
+  lastMessage: MessageData;
+  unseenMessagesCount: number;
 }
+
 interface ErrorResponse {
   message: string;
 }
 const useFetchAllChats = () => {
-  const [chats, setChats] = useState<unknown[]>([]);
+  const [chats, setChats] = useState<ChatData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const chatsURL = "http://localhost:8000/api/v1/chat?isGroup=false";
