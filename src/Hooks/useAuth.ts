@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useUser } from "../Context/UserContext";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export interface UserData {
   _id: string;
   name: string;
@@ -21,7 +22,7 @@ const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { loginUser, logoutUser } = useUser();
-
+  const nav = useNavigate();
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
 
@@ -78,11 +79,14 @@ const useAuth = () => {
         }
       );
       setUser(response.data.data);
+      nav("/");
+      toast.success("User account created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
-        errorResponse.response?.data.message || "An error occurred during login"
+        err.response.data.message
       );
+      toast.error(err.response.data.message);
     } finally {
       setLoading(false);
     }
