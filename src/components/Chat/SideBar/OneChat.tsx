@@ -8,6 +8,7 @@ interface OneChatProps {
   user?: string;
   image: string;
   id: string;
+  isUser: boolean;
 }
 
 export default function OneChat({
@@ -16,10 +17,11 @@ export default function OneChat({
   lastMessage,
   image,
   id,
+  isUser,
 }: OneChatProps) {
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/chat/" + id);
+    isUser ? navigate("/chat/new/" + id) : navigate("/chat/" + id);
   }
   return (
     <Box

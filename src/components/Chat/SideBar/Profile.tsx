@@ -60,7 +60,7 @@ export default function Profile() {
               fontFamily={"Roboto"}
               sx={{ lineHeight: "1", color: "#545454" }}
             >
-              Senior Developer
+              {user?.status || "My Status"}
             </Typography>
           </Box>
         </Box>
