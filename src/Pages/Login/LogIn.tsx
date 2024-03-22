@@ -9,14 +9,36 @@ import useAuth from '../../Hooks/useAuth';
 import { FcGoogle } from "react-icons/fc";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-
+import { useGoogleLogin } from '@react-oauth/google';
+import axios, { AxiosResponse, AxiosError } from "axios";
+// import { GoogleLogin } from '@react-oauth/google';
+// import { jwtDecode } from "jwt-decode";
 
 
 function LogIn() {
 
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await axios.get(
+          'https://www.googleapis.com/oauth2/v3/userinfo',
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`, // Use tokenResponse.access_token
+            },
+          }
+        );
+        
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+  
   const { login, loading, error } = useAuth();
 
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -25,7 +47,7 @@ function LogIn() {
   const isMediumOrSmaller = useMediaQuery(theme.breakpoints.down("lg"));
   // const isLargeOrAbove = useMediaQuery(theme.breakpoints.up("lg"));
 
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -47,8 +69,8 @@ function LogIn() {
         await login(values.email, values.password);
       } catch (error) {
         console.error("Login error:", error);
-      }finally {
-        setIsSubmitting(false); 
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
@@ -147,7 +169,7 @@ function LogIn() {
                     background: "#fbfbfb",
                     width: "100%",
                   }}
-                  disabled={isSubmitting} 
+                  disabled={isSubmitting}
                   {...formik.getFieldProps("email")}
                 />
                 <TextField
@@ -170,7 +192,7 @@ function LogIn() {
                           onKeyDown={(event) => event.preventDefault()} // Prevent default behavior
                           edge="end"
                           sx={{
-                            pr:3
+                            pr: 3
                           }}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -193,7 +215,7 @@ function LogIn() {
                       visibility: 'hidden',
                     },
                   }}
-                  disabled={isSubmitting} 
+                  disabled={isSubmitting}
 
                   {...formik.getFieldProps('password')}
                 />
@@ -280,7 +302,7 @@ function LogIn() {
               }}
             >
 
-              <Button
+               <Button
                 sx={{
                   background: "#e8f0f1",
                   width: "90%",
@@ -295,6 +317,7 @@ function LogIn() {
                   textTransform: "none",
                   border: { xs: "1px solid #cbcdd1", lg: "none" }
                 }}
+                onClick={() => loginWithGoogle()}
               >
                 <Box sx={{ fontSize: "35px" }}>
                   <FcGoogle />
@@ -313,7 +336,34 @@ function LogIn() {
                   {" "}
                   Sign in with Google
                 </Typography>{" "}
-              </Button>
+              </Button> 
+
+              {/* <Box  
+              sx={{
+                background: "#e8f0f1",
+                width: "90%",
+                display: "flex",
+                justifyContent: "center",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                height: { lg: "60px", md: "45px", xs: "50px" },
+                borderRadius: "14px",
+                gap: ".5rem",
+                alignItems: "center",
+                textTransform: "none",
+                border: { xs: "1px solid #cbcdd1", lg: "none" }
+              }} >
+              <GoogleLogin 
+              
+                onSuccess={(credentialResponse) => {
+                  const credentialResponseOncoded=jwtDecode(credentialResponse?.credential)
+                  console.log(credentialResponseOncoded);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />;
+              </Box> */}
               <Button
                 sx={{
                   background: "#e8f0f1",
