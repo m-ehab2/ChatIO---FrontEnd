@@ -4,8 +4,9 @@ import MainChat from "./MainChat";
 import useFetchAllChats from "../../Hooks/useFetchAllChats";
 import useFetchAllGroupChats from "../../Hooks/useFetchAllGroupChats";
 import useFetchAllUsers from "../../Hooks/useFetchAllUsers";
+import withProtectedRoute from "../../components/HOC/withProtectedRoute";
 
-export default function Chat() {
+export function Chat() {
   const { chats } = useFetchAllChats();
   const { chats: groupedChats } = useFetchAllGroupChats();
   const { users } = useFetchAllUsers();
@@ -31,3 +32,6 @@ export default function Chat() {
     </Box>
   );
 }
+const ProtectedChat = withProtectedRoute(Chat);
+
+export default ProtectedChat;
