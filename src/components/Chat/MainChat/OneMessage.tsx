@@ -1,5 +1,4 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import React from "react";
 import { useUser } from "../../../Context/UserContext";
 import moment from "moment";
 
@@ -8,6 +7,7 @@ interface OneMessageProps {
   content: string;
   createdAt: string;
   senderId: string;
+  media: string;
 }
 
 export default function OneMessage({
@@ -15,6 +15,7 @@ export default function OneMessage({
   createdAt,
   image,
   senderId,
+  media,
 }: OneMessageProps) {
   const { user } = useUser();
   const me = user?._id === senderId;
@@ -40,6 +41,11 @@ export default function OneMessage({
           borderRadius: me ? "10px 10px 0px 10px" : "10px 10px 10px 0px",
         }}
       >
+        {media && (
+          <Box sx={{ width: "100%" }}>
+            <img src={media} width={"100%"} />
+          </Box>
+        )}
         <Typography
           fontSize={"16px"}
           fontFamily={"Inter"}
