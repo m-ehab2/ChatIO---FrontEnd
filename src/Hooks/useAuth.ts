@@ -41,13 +41,17 @@ const useAuth = () => {
           },
         }
       );
-      console.log(response.data.data);
       setUser(response.data.data);
       loginUser(response.data.data);
+      toast.success("Logged in successfully");
+      nav("/chat");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
         errorResponse.response?.data.message || "An error occurred during login"
+      );
+      toast.error(
+        errorResponse.response?.data.message || "an error occurred during login"
       );
     } finally {
       setLoading(false);
@@ -79,14 +83,16 @@ const useAuth = () => {
         }
       );
       setUser(response.data.data);
-      nav("/");
+      nav("/chat");
       toast.success("User account created successfully");
     } catch (err) {
       const errorResponse = err as AxiosError<ErrorResponse>;
       setError(
-        err.response.data.message
+        errorResponse.response?.data.message || "An error occurred during login"
       );
-      toast.error(err.response.data.message);
+      toast.error(
+        errorResponse.response?.data.message || "an error occurred during login"
+      );
     } finally {
       setLoading(false);
     }
