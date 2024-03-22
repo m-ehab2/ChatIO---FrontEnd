@@ -13,7 +13,7 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
-            <Route path={"/"} element={<LandingPage/>} />
+            <Route path={"/"} element={<LandingPage />} />
             <Route path={"/login"} element={<LogIn />} />
             <Route path={"/register"} element={<Registration />} />
             <Route path={"/chat"} element={<Chat />} />
