@@ -1,10 +1,52 @@
-import { Box, Typography } from "@mui/material";
-import RegisterButton from "../../components/RegisterButton";
-import MyInput from "../../components/MyInput";
-import GoogleButton from "../../components/GoogleButton";
-import FacebookButton from "../../components/FacebookButton";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
+import {
+  Box,
+  Typography,
+  Link,
+  TextField,
+  InputAdornment,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
+import RegisterButton from "../../components/Register/RegisterButton";
+import GoogleButton from "../../components/Register/GoogleButton";
+import FacebookButton from "../../components/Register/FacebookButton";
+import { userSchema } from "../../Validations/UserSchema";
+import { Link as RouterLink } from "react-router-dom";
+import { useFormik } from "formik";
+import useAuth from "../../Hooks/useAuth";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
+const initialValues = {
+  userName: "",
+  email: "",
+  password: "",
+  passwordConfirm: "",
+};
 const Registration = () => {
+  const { register, loading } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: userSchema,
+    onSubmit: async (values) => {
+      try {
+        console.log(values);
+        await register(
+          values.userName,
+          values.email,
+          values.password,
+          values.passwordConfirm
+        );
+
+        // console.log(error);
+      } catch (error) {
+        console.error("register error:", error);
+      }
+    },
+  });
+
   return (
     <>
       <Box
@@ -13,7 +55,8 @@ const Registration = () => {
           alignItems: "center",
           justifyContent: { md: "space-between", xs: "center" },
           marginLeft: { md: "190px" },
-          //   marginTop: "20px",
+          gap: "12px",
+          marginBottom: "23px",
         }}
       >
         <Typography
@@ -21,7 +64,8 @@ const Registration = () => {
             fontSize: { md: "2.5rem", sm: "2rem", xs: "1.5rem" },
             color: "#2A454E",
             fontWeight: "bold",
-            // fontFamily: "ArialArial, Helvetica, sans-serif",
+            marginTop: "50px",
+            paddingY: "14px",
           }}
         >
           Create your account
@@ -33,37 +77,185 @@ const Registration = () => {
           flexDirection: { md: "row", xs: "column-reverse" },
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          height: { md: "90vh", xs: "100vh" },
           width: { md: "90%", xs: "100%" },
           marginLeft: { md: "100px" },
-          marginTop: { md: "-50px" },
+          marginTop: { md: "-30px" },
         }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: { md: "20px", xs: "10px" },
-            width: { md: "50%", xs: "70%" },
-            marginRight: { md: "-150px" },
+
+            width: { md: "50%", sm: "80%", xs: "90%" },
+            marginRight: { md: "-40px" },
           }}
         >
-          <MyInput
-            name="Username"
-            type="string"
-            placeholder="Enter your username"
-          />
-          <MyInput name="Email" type="email" placeholder="Example@email.com" />
-          <MyInput name="Password" type="password" placeholder="" />
-          <MyInput name="Confirm password" type="password" placeholder="" />
-          <RegisterButton children="Register" />
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              paddingTop: "30px",
+            }}
+          >
+            <TextField
+              sx={{
+                width: { md: "65%", xs: "100%" },
+                borderRadius: "40px",
+                borderColor:
+                  formik.touched.userName && formik.errors.userName
+                    ? "red"
+                    : "#d4d7e3",
+                background: "#fbfbfb",
+              }}
+              size="small"
+              id="outlined-error-helper-text"
+              label="Username"
+              variant="outlined"
+              helperText={
+                formik.touched.userName && formik.errors.userName ? (
+                  <Typography sx={{ color: "e06e6e" }}>
+                    {formik.errors.userName}
+                  </Typography>
+                ) : null
+              }
+              disabled={loading}
+              error={formik.touched.userName && Boolean(formik.errors.userName)}
+              {...formik.getFieldProps("userName")}
+            />
+            <TextField
+              sx={{
+                width: { md: "65%", xs: "100%" },
+                borderRadius: "40px",
+                borderColor:
+                  formik.touched.email && formik.errors.email
+                    ? "red"
+                    : "#d4d7e3",
+                background: "#fbfbfb",
+              }}
+              size="small"
+              id="outlined-error-helper-text"
+              label="Email"
+              variant="outlined"
+              helperText={
+                formik.touched.email && formik.errors.email ? (
+                  <Typography sx={{ color: "e06e6e" }}>
+                    {formik.errors.email}
+                  </Typography>
+                ) : null
+              }
+              disabled={loading}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              {...formik.getFieldProps("email")}
+            />
+            <TextField
+              sx={{
+                width: { md: "65%", xs: "100%" },
+                borderRadius: "40px",
+                borderColor:
+                  formik.touched.password && formik.errors.password
+                    ? "red"
+                    : "#d4d7e3",
+                background: "#fbfbfb",
+              }}
+              type={showPassword ? "text" : "password"}
+              size="small"
+              id="outlined-error-helper-text"
+              label="Password"
+              variant="outlined"
+              helperText={
+                formik.touched.password && formik.errors.password ? (
+                  <Typography sx={{ color: "e06e6e" }}>
+                    {formik.errors.password}
+                  </Typography>
+                ) : null
+              }
+              disabled={loading}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              {...formik.getFieldProps("password")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      onKeyDown={(event) => event.preventDefault()}
+                      edge="end"
+                      sx={{
+                        pr: 3,
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              sx={{
+                width: { md: "65%", xs: "100%" },
+                borderRadius: "40px",
+                borderColor:
+                  formik.touched.passwordConfirm &&
+                  formik.errors.passwordConfirm
+                    ? "red"
+                    : "#d4d7e3",
+                background: "#fbfbfb",
+              }}
+              type={showCPassword ? "text" : "password"}
+              size="small"
+              id="outlined-error-helper-text"
+              label="Confirm password"
+              variant="outlined"
+              helperText={
+                formik.touched.passwordConfirm &&
+                formik.errors.passwordConfirm ? (
+                  <Typography sx={{ color: "e06e6e" }}>
+                    {formik.errors.passwordConfirm}
+                  </Typography>
+                ) : null
+              }
+              disabled={loading}
+              error={
+                formik.touched.passwordConfirm &&
+                Boolean(formik.errors.passwordConfirm)
+              }
+              {...formik.getFieldProps("passwordConfirm")}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowCPassword((prev) => !prev)}
+                      onKeyDown={(event) => event.preventDefault()}
+                      edge="end"
+                      sx={{
+                        pr: 3,
+                      }}
+                    >
+                      {showCPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <RegisterButton
+              children={loading ? <CircularProgress size={24} /> : "Register"}
+            />
+          </Box>
+
           <Box
             sx={{
               display: "flex",
-              width: { md: "60%", xs: "100%" },
+              width: { md: "65%", xs: "100%" },
               alignItems: "center",
               justifyContent: "center",
               color: "grey",
+              paddingY: "12px",
             }}
           >
             <Box
@@ -75,33 +267,40 @@ const Registration = () => {
               sx={{ flex: 1, height: "1px", background: "#d4d4d4", ml: 1 }}
             />
           </Box>
-
-          <GoogleButton children="Sign Up with Google"></GoogleButton>
-          <FacebookButton children="Sign Up with Facebook"></FacebookButton>
-
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <GoogleButton children="Sign Up with Google"></GoogleButton>
+            <FacebookButton children="Sign Up with Facebook"></FacebookButton>
+          </Box>
           <Box
             sx={{
-              width: { md: "59%", xs: "100%" },
+              width: { md: "65%", xs: "100%" },
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "grey",
             }}
           >
-            <Box sx={{ display: "flex", gap: "12px" }}>
+            <Box sx={{ display: "flex", gap: "12px", paddingTop: "12px" }}>
               <Typography sx={{}}>have an account? </Typography>
-              <Typography sx={{ color: "#2A454E" }}> Sign in </Typography>
+              <Typography sx={{ color: "#2A454E" }}>
+                <Link
+                  to={"/login"}
+                  component={RouterLink}
+                  sx={{ textDecoration: "none" }}
+                >
+                  Sign in
+                </Link>
+              </Typography>
             </Box>
           </Box>
         </Box>
         <Box
           component="img"
           sx={{
-            marginRight: { md: "100px", xs: "1px" },
-            width: { md: "40%", xs: "185px" },
-            height: { md: "70%", xs: "148px" },
-            // maxHeight: { xs: 233, md: 167 },
-            // maxWidth: { xs: 350, md: 250 },
+            marginRight: { xs: "1px" },
+            width: { md: "550px", sm: "200px", xs: "185px" },
+            height: { md: "500px", xs: "200px" },
+            marginTop: { md: "1px", xs: "120px" },
           }}
           alt="The house from the offer."
           src="/src/assets/6300959.jpg"
@@ -112,60 +311,3 @@ const Registration = () => {
 };
 
 export default Registration;
-
-//    <div>
-//      <h1>Anywhere in your app!</h1>
-//      <Formik
-//        initialValues={{ email: "", password: "" }}
-//        validate={(values) => {
-//          const errors = {};
-//          if (!values.email) {
-//            errors.email = "Required";
-//          } else if (
-//            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-//          ) {
-//            errors.email = "Invalid email address";
-//          }
-//          return errors;
-//        }}
-//        onSubmit={(values, { setSubmitting }) => {
-//          setTimeout(() => {
-//            alert(JSON.stringify(values, null, 2));
-//            setSubmitting(false);
-//          }, 400);
-//        }}
-//      >
-//        {({
-//          values,
-//          errors,
-//          touched,
-//          handleChange,
-//          handleBlur,
-//          handleSubmit,
-//          isSubmitting,
-//          /* and other goodies */
-//        }) => (
-//          <form onSubmit={handleSubmit}>
-//            <input
-//              type="email"
-//              name="email"
-//              onChange={handleChange}
-//              onBlur={handleBlur}
-//              value={values.email}
-//            />
-//            {errors.email && touched.email && errors.email}
-//            <input
-//              type="password"
-//              name="password"
-//              onChange={handleChange}
-//              onBlur={handleBlur}
-//              value={values.password}
-//            />
-//            {errors.password && touched.password && errors.password}
-//            <button type="submit" disabled={isSubmitting}>
-//              Submit
-//            </button>
-//          </form>
-//        )}
-//      </Formik>
-//    </div>;

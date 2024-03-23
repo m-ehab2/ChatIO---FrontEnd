@@ -1,46 +1,52 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Link, useMediaQuery, InputAdornment, IconButton, CircularProgress } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Link,
+  useMediaQuery,
+  InputAdornment,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import * as Yup from "yup";
 import imgPath from "../../assets/login.jpeg";
-import useAuth from '../../Hooks/useAuth';
+import useAuth from "../../Hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
 import axios, { AxiosResponse, AxiosError } from "axios";
 // import { GoogleLogin } from '@react-oauth/google';
 // import { jwtDecode } from "jwt-decode";
 
-
 function LogIn() {
-
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         const res = await axios.get(
-          'https://www.googleapis.com/oauth2/v3/userinfo',
+          "https://www.googleapis.com/oauth2/v3/userinfo",
           {
             headers: {
               Authorization: `Bearer ${tokenResponse.access_token}`, // Use tokenResponse.access_token
             },
           }
         );
-        
+
         console.log(res);
       } catch (err) {
         console.log(err);
       }
     },
   });
-  
+
   const { login, loading, error } = useAuth();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-
 
   const theme = useTheme();
 
@@ -64,7 +70,7 @@ function LogIn() {
     }),
     onSubmit: async (values) => {
       try {
-        console.log(values)
+        console.log(values);
         setIsSubmitting(true);
         await login(values.email, values.password);
       } catch (error) {
@@ -119,11 +125,10 @@ function LogIn() {
             display: "flex",
             flexDirection: {
               md: "row",
-              xs: "column-reverse"
+              xs: "column-reverse",
             },
             justifyContent: "center",
             alignItems: "center",
-
           }}
         >
           {/* left container inside sub-Main*/}
@@ -155,17 +160,21 @@ function LogIn() {
                   id="outlined-error-helper-text"
                   size={isMediumOrSmaller ? "small" : "medium"}
                   autoComplete="false"
-
                   helperText={
                     formik.touched.email && formik.errors.email ? (
-                      <Typography sx={{ color: "e06e6e" }}>{formik.errors.email}</Typography>
+                      <Typography sx={{ color: "e06e6e" }}>
+                        {formik.errors.email}
+                      </Typography>
                     ) : null
                   }
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   sx={{
                     mb: { lg: 3, xs: 2 },
                     borderRadius: "12px",
-                    borderColor: formik.touched.email && formik.errors.email ? "red" : "#d4d7e3",
+                    borderColor:
+                      formik.touched.email && formik.errors.email
+                        ? "red"
+                        : "#d4d7e3",
                     background: "#fbfbfb",
                     width: "100%",
                   }}
@@ -174,15 +183,19 @@ function LogIn() {
                 />
                 <TextField
                   label="Password"
-                  type={showPassword ? 'text' : 'password'} // Toggle between text and password type
+                  type={showPassword ? "text" : "password"} // Toggle between text and password type
                   variant="outlined"
                   size={isMediumOrSmaller ? "small" : "medium"}
                   helperText={
                     formik.touched.password && formik.errors.password ? (
-                      <Typography sx={{ color: 'error.main' }}>{formik.errors.password}</Typography>
+                      <Typography sx={{ color: "error.main" }}>
+                        {formik.errors.password}
+                      </Typography>
                     ) : null
                   }
-                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -192,7 +205,7 @@ function LogIn() {
                           onKeyDown={(event) => event.preventDefault()} // Prevent default behavior
                           edge="end"
                           sx={{
-                            pr: 3
+                            pr: 3,
                           }}
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -202,22 +215,25 @@ function LogIn() {
                   }}
                   sx={{
                     mb: 1,
-                    borderRadius: '12px',
-                    borderColor: formik.touched.password && formik.errors.password ? 'red' : '#d4d7e3',
-                    background: '#fbfbfb',
-                    width: '100%',
+                    borderRadius: "12px",
+                    borderColor:
+                      formik.touched.password && formik.errors.password
+                        ? "red"
+                        : "#d4d7e3",
+                    background: "#fbfbfb",
+                    width: "100%",
                     'input[type="password"]::-ms-reveal': {
-                      display: 'none',
+                      display: "none",
                       width: 0,
                       height: 0,
                     },
-                    'input[type="password"]::-webkit-credentials-auto-fill-button': {
-                      visibility: 'hidden',
-                    },
+                    'input[type="password"]::-webkit-credentials-auto-fill-button':
+                      {
+                        visibility: "hidden",
+                      },
                   }}
                   disabled={isSubmitting}
-
-                  {...formik.getFieldProps('password')}
+                  {...formik.getFieldProps("password")}
                 />
                 {/* link container inside form*/}
                 <Box
@@ -233,11 +249,13 @@ function LogIn() {
                   <Link
                     // to="#"
                     sx={{
-                      color: "#536a70", mb: 2, fontFamily: "Varela Round",
-                      textDecoration: "none", "&:hover": {
-
-                        color: "#849599"
-                      }
+                      color: "#536a70",
+                      mb: 2,
+                      fontFamily: "Varela Round",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "#849599",
+                      },
                     }}
                   >
                     Forget Password?
@@ -301,8 +319,7 @@ function LogIn() {
                 gap: "1rem",
               }}
             >
-
-               <Button
+              <Button
                 sx={{
                   background: "#e8f0f1",
                   width: "90%",
@@ -315,7 +332,7 @@ function LogIn() {
                   gap: ".5rem",
                   alignItems: "center",
                   textTransform: "none",
-                  border: { xs: "1px solid #cbcdd1", lg: "none" }
+                  border: { xs: "1px solid #cbcdd1", lg: "none" },
                 }}
                 onClick={() => loginWithGoogle()}
               >
@@ -330,13 +347,13 @@ function LogIn() {
                     fontSize: "1.1rem",
                     fontFamily:
                       "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
-                    paddingRight: "1.2rem"
+                    paddingRight: "1.2rem",
                   }}
                 >
                   {" "}
                   Sign in with Google
                 </Typography>{" "}
-              </Button> 
+              </Button>
 
               {/* <Box  
               sx={{
@@ -377,8 +394,6 @@ function LogIn() {
                   alignItems: "center",
                   textTransform: "none",
                   border: { xs: "1px solid #cbcdd1", lg: "none" },
-
-
                 }}
               >
                 <FacebookRoundedIcon sx={{ fontSize: "35px" }} />
