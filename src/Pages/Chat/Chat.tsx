@@ -19,7 +19,7 @@ export function Chat() {
   return (
     <Box sx={{ background: "#F5F5F5", height: "100vh" }}>
       <Grid container sx={{ height: "100%" }}>
-        {!open && (
+        {/* {!open && (
           <Button
             variant="contained"
             sx={{
@@ -41,11 +41,11 @@ export function Chat() {
           >
             Open Chats
           </Button>
-        )}
+        )} */}
         {!open && (
           <IconButton
             sx={{
-              display: { md: "none", xs: "block" },
+              display: { lg: "none", xs: "block" },
               position: "absolute",
               right: "10px",
               top: "10px",
