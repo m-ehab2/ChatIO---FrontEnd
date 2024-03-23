@@ -16,7 +16,7 @@ const useFetchAllUsers = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const usersURL = "http://localhost:8000/api/v1/user";
+  const usersURL = "https://chatio-backend-9h8j.onrender.com/api/v1/user";
   const fetchUsers = async () => {
     try {
       const response = await axios.get(usersURL, {

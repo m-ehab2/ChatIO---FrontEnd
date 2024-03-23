@@ -15,7 +15,7 @@ interface ErrorResponse {
   message: string;
 }
 
-const BASE_URL = "http://localhost:8000/api/v1/auth";
+const BASE_URL = "https://chatio-backend-9h8j.onrender.com/api/v1/auth";
 
 const useAuth = () => {
   const [user, setUser] = useState<UserData | null>(null);

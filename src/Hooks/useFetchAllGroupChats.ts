@@ -11,7 +11,8 @@ const useFetchAllGroupChats = () => {
   const [chats, setChats] = useState<ChatData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const chatsURL = "http://localhost:8000/api/v1/chat?isGroup=true";
+  const chatsURL =
+    "https://chatio-backend-9h8j.onrender.com/api/v1/chat?isGroup=true";
   const fetchChats = async () => {
     try {
       const response = await axios.get(chatsURL, {
