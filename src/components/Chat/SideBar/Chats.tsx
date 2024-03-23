@@ -4,6 +4,7 @@ import {
   Chip,
   IconButton,
   LinearProgress,
+  Modal,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
@@ -20,10 +21,12 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   function handleClick(e: string) {
     setActiveTab(e);
   }
-
   return (
     <Box sx={{ height: "85%", position: "relative" }}>
       <Typography fontSize={25} fontWeight={500} color={"#385A64"}>
@@ -170,8 +173,31 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           ""
         )}
       </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute" as "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {users.map((user) => user.name)}
+        </Box>
+      </Modal>
       {activeTab === "groups" ? (
         <IconButton
+          onClick={handleOpen}
           sx={{
             position: "absolute",
             backgroundColor: "#385A64",
