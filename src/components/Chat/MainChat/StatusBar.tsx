@@ -1,6 +1,4 @@
-import { Avatar, Box, IconButton, Typography } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import InfoIcon from "@mui/icons-material/Info";
+import { Avatar, Box, Typography } from "@mui/material";
 
 interface StatusBarProps {
   name: string;
@@ -49,7 +47,7 @@ export default function StatusBar({ name, img }: StatusBarProps) {
         </Box>
       </Box>
       <Box>
-        <IconButton
+        {/* <IconButton
           aria-label="Edit"
           sx={{
             borderRadius: "50%",
@@ -68,7 +66,7 @@ export default function StatusBar({ name, img }: StatusBarProps) {
           }}
         >
           <InfoIcon fontSize="inherit" />
-        </IconButton>
+        </IconButton> */}
       </Box>
     </Box>
   );

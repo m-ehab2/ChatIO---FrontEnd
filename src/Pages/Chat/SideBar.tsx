@@ -18,6 +18,9 @@ export default function SideBar({ chats, groupedChats, users }: SideBarProps) {
         flexDirection: "column",
         gap: "5px",
         height: "100%",
+        padding: "30px",
+        border: "2px solid #DFE0E4",
+        borderWidth: "0px 2px 0px 0px",
       }}
     >
       <Profile />
