@@ -8,9 +8,10 @@ export default function NeutralBox() {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
+        width: { md: "100%", xs: "40&" },
       }}
     >
-      <Box sx={{ width: "200px" }}>
+      <Box sx={{ width: "40%" }}>
         <img src={logoPath} />
       </Box>
       <Typography
@@ -24,7 +25,7 @@ export default function NeutralBox() {
       <Typography
         fontWeight={"300"}
         fontFamily={"Inter"}
-        fontSize={18}
+        fontSize={{ md: "18", xs: "14" }}
         color={"#A2B1B5"}
         width={520}
         textAlign={"center"}

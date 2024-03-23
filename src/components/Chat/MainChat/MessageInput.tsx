@@ -72,6 +72,7 @@ export default function MessageInput() {
     >
       <CssTextField
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleClick()}
         value={message}
         autoFocus
         fullWidth
