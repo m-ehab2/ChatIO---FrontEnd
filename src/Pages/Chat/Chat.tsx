@@ -23,7 +23,7 @@ export function Chat() {
           <Button
             variant="contained"
             sx={{
-              display: { md: "block", xs: "none" },
+              display: { lg: "none", md: "block", xs: "none" },
               position: "absolute",
               right: "10px",
               top: "10px",
@@ -39,7 +39,7 @@ export function Chat() {
             }}
             onClick={toggleDrawer(true)}
           >
-            Open Nav
+            Open Chats
           </Button>
         )}
         {!open && (
@@ -72,7 +72,14 @@ export function Chat() {
         >
           <SideBar chats={chats} groupedChats={groupedChats} users={users} />
         </Drawer>{" "}
-        <Grid sx={{ height: "100%" }} item xs={12}>
+        <Grid
+          sx={{ height: "100%", display: { lg: "block", xs: "none" } }}
+          item
+          xs={3}
+        >
+          <SideBar chats={chats} groupedChats={groupedChats} users={users} />
+        </Grid>
+        <Grid sx={{ height: "100%" }} item lg={9} xs={12}>
           <MainChat />
         </Grid>
       </Grid>
