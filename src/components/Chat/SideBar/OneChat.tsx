@@ -57,6 +57,7 @@ export default function OneChat({
           fontSize={9}
           fontWeight={"400"}
           fontFamily={"Inter"}
+          sx={{ width: "200px", textWrap: "pretty" }}
         >
           {lastMessage || "Start chatting " + (user || "John Doe")}
         </Typography>
