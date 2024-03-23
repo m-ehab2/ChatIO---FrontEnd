@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useAuth from "../../../Hooks/useAuth";
 
-export default function Profile() {
+export default function Profile({ handleChange }) {
   const { user } = useUser();
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -94,6 +94,7 @@ export default function Profile() {
       <TextField
         id="input-with-icon-textfield"
         hiddenLabel
+        onChange={(e) => handleChange(e)}
         fullWidth
         placeholder="Search..."
         size="small"
