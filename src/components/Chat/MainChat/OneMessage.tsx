@@ -29,7 +29,7 @@ export default function OneMessage({
         padding: "10px 0px",
         justifyContent: me ? "end" : "start",
         flexDirection: me ? "row-reverse" : "row",
-        flexGrow: "1",
+        // flexGrow: "1",
       }}
     >
       <Avatar src={image} />
