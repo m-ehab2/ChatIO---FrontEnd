@@ -3,10 +3,12 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useUser } from "../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 export interface UserData {
   _id: string;
   name: string;
   email: string;
+  status:string;
   image: string;
   status: string;
 }
@@ -41,6 +43,7 @@ const useAuth = () => {
           },
         }
       );
+
       setUser(response.data.data);
       loginUser(response.data.data);
       toast.success("Logged in successfully");
