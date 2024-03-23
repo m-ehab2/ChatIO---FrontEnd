@@ -24,7 +24,7 @@ const useSendMessage = () => {
       messageData.content && formData.append("content", messageData.content);
       messageData.media && formData.append("media", messageData.media);
       const response = await axios.post(
-        "http://localhost:8000/api/v1/message",
+        "https://chatio-backend-9h8j.onrender.com/api/v1/message",
         formData
       );
       setError(null);

@@ -15,9 +15,12 @@ const useCreateChat = () => {
     try {
       setLoading(true);
 
-      const response = await axios.post("http://localhost:8000/api/v1/chat", {
-        userId: id,
-      });
+      const response = await axios.post(
+        "https://chatio-backend-9h8j.onrender.com/api/v1/chat",
+        {
+          userId: id,
+        }
+      );
       setError(null);
       setLoading(false);
       navigate(`/chat/${response.data.data._id}`);

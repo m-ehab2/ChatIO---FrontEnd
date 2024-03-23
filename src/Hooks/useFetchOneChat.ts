@@ -27,7 +27,7 @@ const useFetchOneChat = (id: string) => {
   const [chat, setChat] = useState<OneChat | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const chatsURL = "http://localhost:8000/api/v1/chat/" + id;
+  const chatsURL = "https://chatio-backend-9h8j.onrender.com/api/v1/chat/" + id;
   const fetchChat = async () => {
     try {
       setChat(null);
