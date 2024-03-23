@@ -4,6 +4,8 @@ import {
   Chip,
   IconButton,
   LinearProgress,
+  Modal,
+  Avatar,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
@@ -20,10 +22,12 @@ interface ChatsProps {
 
 export default function Chats({ chats, groupedChats, users }: ChatsProps) {
   const [activeTab, setActiveTab] = useState<string>("chats");
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   function handleClick(e: string) {
     setActiveTab(e);
   }
-
   return (
     <Box sx={{ height: "85%", position: "relative" }}>
       <Typography fontSize={25} fontWeight={500} color={"#385A64"}>
@@ -58,7 +62,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
             },
           }}
         />
-        <Chip
+        {/* <Chip
           label="Groups"
           clickable
           onClick={() => handleClick("groups")}
@@ -77,7 +81,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
               borderColor: "white",
             },
           }}
-        />
+        /> */}
         <Chip
           label="Contacts"
           clickable
@@ -128,7 +132,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
             <LinearProgress />
           )
         ) : null}
-        {activeTab === "groups" ? (
+        {/* {activeTab === "groups" ? (
           groupedChats ? (
             groupedChats.map((chat) => {
               return (
@@ -148,7 +152,7 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           )
         ) : (
           ""
-        )}
+        )} */}
         {activeTab === "contacts" ? (
           users ? (
             users.map((user) => {
@@ -170,8 +174,52 @@ export default function Chats({ chats, groupedChats, users }: ChatsProps) {
           ""
         )}
       </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute" as "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 800,
+            height: "500px",
+            overflowY: "scroll",
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            p: 4,
+          }}
+        >
+          {users.map((user) => (
+            <Box
+              sx={{
+                width: "240px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                border: "1px solid #385A64",
+                marginBottom: "10px",
+                padding: "10px",
+                borderRadius: "10px",
+              }}
+            >
+              <Avatar src={user.image} />
+              <Typography>{user.name}</Typography>
+            </Box>
+          ))}
+        </Box>
+      </Modal>
       {activeTab === "groups" ? (
         <IconButton
+          onClick={handleOpen}
           sx={{
             position: "absolute",
             backgroundColor: "#385A64",

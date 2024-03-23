@@ -3,6 +3,7 @@ import Profile from "../../components/Chat/SideBar/Profile";
 import Chats from "../../components/Chat/SideBar/Chats";
 import { ChatData } from "../../Hooks/useFetchAllChats";
 import { UserData } from "../../Hooks/useFetchAllUsers";
+import { useState } from "react";
 
 export interface SideBarProps {
   chats: ChatData[];
@@ -11,6 +12,10 @@ export interface SideBarProps {
 }
 
 export default function SideBar({ chats, groupedChats, users }: SideBarProps) {
+  const [param, setParam] = useState<string>("");
+  function handleChange(e) {
+    setParam(e.target.value);
+  }
   return (
     <Box
       sx={{
@@ -23,9 +28,19 @@ export default function SideBar({ chats, groupedChats, users }: SideBarProps) {
         borderWidth: "0px 2px 0px 0px",
       }}
     >
-      <Profile />
+      <Profile handleChange={handleChange} />
       <Divider />
-      <Chats chats={chats} groupedChats={groupedChats} users={users} />
+      <Chats
+        chats={chats.filter((chat) =>
+          chat.chatName.toLowerCase().includes(param.toLowerCase())
+        )}
+        groupedChats={groupedChats.filter((chat) =>
+          chat.chatName.toLowerCase().includes(param.toLowerCase())
+        )}
+        users={users.filter((user) =>
+          user.name.toLowerCase().includes(param.toLowerCase())
+        )}
+      />
     </Box>
   );
 }
